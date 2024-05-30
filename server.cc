@@ -9,7 +9,9 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <unistd.h>
-
+const int PORT = 8090; 
+const int BUFFER_SIZE = 1024; 
+const int MAX_CONNECTIONS = 10; 
 int main() {
   // create a socket
   int sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -24,7 +26,7 @@ int main() {
 
   address.sin_family = AF_INET;         // addressing type IPv4 of IPv6
   address.sin_addr.s_addr = INADDR_ANY; // recive connections from any interface
-  address.sin_port = htons(port);       // set the port number for the socket
+  address.sin_port = htons(PORT);       // set the port number for the socket
   // htons function convert port# form host byte order to network byte order
   memset(address.sin_zero, '\0',
          sizeof(address.sin_zero)); // make sure the padding is zeros it is not
@@ -37,7 +39,7 @@ int main() {
   }
 
   // lesten for a connection
-  if (listen(sockfd, 10) < 0) {
+  if (listen(sockfd, MAX_CONNECTIONS) < 0) {
     std::cerr << "Listen failed\n";
     return 3;
   }
@@ -60,7 +62,7 @@ int main() {
         INET_ADDRSTRLEN); // function convert network address to char string
     std::cout << "Connection accepted from " << clientIp << std::endl;
     // receving data
-    char buffer[1024] = {0};
+    char buffer[BUFFER_SIZE] = {0};
     ssize_t bytesReceived;
     while ((bytesReceived = recv(new_connection, buffer, sizeof(buffer), 0)) > 0) {
         std::cout << clientIp << ": " << buffer << std::endl;
