@@ -9,6 +9,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <unistd.h>
+const int PORT = 8090; 
 
 int main() {
   int sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -19,7 +20,7 @@ int main() {
   struct sockaddr_in serverAddr;
   memset(&serverAddr, 0, sizeof(serverAddr));
   serverAddr.sin_family = AF_INET;
-  serverAddr.sin_port = htons(2222);
+  serverAddr.sin_port = htons(PORT);
   serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
 
   // connect to the server
