@@ -15,7 +15,7 @@ int main() {
   int sockfd = socket(AF_INET, SOCK_STREAM, 0);
   if (sockfd < 0) {
     std::cerr << "Socket creation failed\n";
-    close(sockfd);
+    //close(sockfd);
     return 1;
   }
 
